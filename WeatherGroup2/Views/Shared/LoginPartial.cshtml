@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WeatherGroup2.Identity
+
+
+@inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser> userManager
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    string currentLoggedUserID = userManager.GetUserId(User);
+    string currentLoggedName = userManager.GetUserName(User);
+
+
+    <!-- User is logged in -->
+    <ul class="navbar-nav ml-auto">
+
+        @if (User.IsInRole("Admin"))
+        {
+
+            <li class="nav-item">
+                <a class="nav-link text-warning" asp-area="" asp-controller="Weather" asp-action="Main"><small>Hello Admin @currentLoggedName!</small></a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-white" asp-area="" asp-controller="Weather" asp-action="Main"><small>Hello @currentLoggedName!</small></a>
+            </li>
+        }
+
+        <li class="nav-item">
+            <a class="nav-link text-secondary" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+        </li>
+    </ul>
+}
+else
+{
+    <!-- User is NOT logged in -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CreateUser">Register</a>
+        </li>
+    </ul>
+}

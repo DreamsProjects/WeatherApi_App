@@ -1,0 +1,83 @@
+﻿@using System.Globalization
+@model WeatherGroup2.ViewModels.OverviewViewModel
+
+
+<div class="card border-info">
+
+    <div class="card-header text-center">
+        <h5>@Model.CityName</h5>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-9">
+                <table class="table text-center table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Current weather</th>
+                        <th scope="col">Temperature</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-transform: capitalize">@Model.Day.DayOfWeek @Model.Date</td>
+                        <td><img src="@Model.WeatherUrl" />@Model.Weather</td>
+                        <td>@Model.CurrentTemp degrees</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-3">
+                <div class="mt-3">
+                    <a class="btn btn-secondary btn-sm"
+                       asp-controller="Weather"
+                       asp-action="SaveInFavorites"
+                       asp-route-favoriteId="@Model.CityId"
+                       data-ajax="true"
+                       data-ajax-method="get"
+                       data-ajax-mode="replace"
+                       data-ajax-update="#FavoriteSection">
+                        <i class="far fa-star"></i>
+                        Save to favorites
+                    </a>
+                </div>
+                <div class="mt-3">
+                    <a id="ShowDetails" class="btn btn-info btn-sm" 
+                       onclick="showDetails();"
+                       asp-controller="Weather"
+                       asp-action="ShowDetails"
+                       asp-route-cityId="@Model.CityId"
+                       data-ajax="true"
+                       data-ajax-method="get"
+                       data-ajax-mode="replace"
+                       data-ajax-update="#DetailedView">
+                        6-day forecast
+
+                    </a>
+                    <a class="btn btn-info btn-sm" id="HideDetails"
+                       href="#"
+                       onclick="hideDetails();"
+                       style="display: none">
+                        Hide details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .btn-secondary {
+        color: #fff;
+        background-color: #6c757d;
+        border-color: #6c757d /*set the color you want here*/
+    }
+        .btn-secondary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #79b86d;
+            border-color: #79b86d; /*set the color you want here*/
+        }
+
+</style>

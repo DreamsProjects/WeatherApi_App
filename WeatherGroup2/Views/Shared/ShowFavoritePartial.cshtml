@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WeatherGroup2.Models.Favorite>
+
+
+<div class="card border-info">
+
+    <div class="card-header text-center">
+        <h5>My saved places</h5>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-sm table-borderless table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="2" class="text-center">
+                        Favorites
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a onclick="hideDetails();"
+                               asp-controller="Weather"
+                               asp-action="ShowOverview"
+                               asp-route-searchQuery="@item.CityId"
+                               data-ajax="true"
+                               data-ajax-method="get"
+                               data-ajax-mode="replace"
+                               data-ajax-update="#newOverviewContainer2">
+                                @item.CityName
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-danger" asp-controller="Weather"
+                               asp-action="RemoveFromFavorites"
+                               asp-route-favoriteId="@item.CityId"
+                               data-ajax="true"
+                               data-ajax-method="get"
+                               data-ajax-mode="replace"
+                               data-ajax-update="#FavoriteSection">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿@model WeatherGroup2.ViewModels.AccountViewModels.LoginModel
+
+
+<div class="row mt-4">
+    <div class="col-5 mx-auto">
+        <div class="card">
+            <div class="card-header text-white bg-dark mb-3">
+                <h4>Log in</h4>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    
+                    <div class="mt-md-1">
+                        <span>Don't have an account?</span>
+                        <a asp-controller="Admin" asp-action="CreateUser">Register</a>
+                    </div>
+
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        
+                        <div class="text-danger form-control-sm" asp-validation-summary="All"></div>
+                    
+                        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+                        <div class="form-group">
+                            <strong><label asp-for="Email"></label></strong>
+                            <input type="email" asp-for="Email" class="form-control" placeholder="e-mail" />
+                            <span asp-validation-for="Email" class="text-danger form-control-sm"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <strong><label asp-for="Password"></label></strong>
+                            <input type="password" asp-for="Password" class="form-control" placeholder="Password" />
+                            <span asp-validation-for="Password" class="text-danger form-control-sm"></span>
+                        </div>
+
+
+                        <button class="btn btn-success" type="submit">Log In</button>
+
+
+
+                        @*<div class="form-group">
+                                <label for="user">Användarnamn: </label>
+                                <input type="text" id="user"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pass">Lösenord: </label>
+                                <input type="password" id="pass"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Logga in"/>
+                            </div>*@
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

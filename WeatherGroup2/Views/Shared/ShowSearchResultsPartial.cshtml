@@ -1,0 +1,42 @@
+﻿@model WeatherSearch
+
+
+<div class="card border-info">
+
+    <div class="card-header text-center">
+        <h5>Results</h5>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-9">
+
+                @if (Model.CityList != null && Model.CityList.Count != 0)
+                {
+                    foreach (var searchResult in Model.CityList)
+                    {
+                        <h3>
+                            City:
+
+                            <a onclick="hideDetails();"
+                               asp-controller="Weather"
+                               asp-action="ShowOverview"
+                               asp-route-searchQuery="@searchResult.CityId"
+                               data-ajax="true"
+                               data-ajax-method="get"
+                               data-ajax-mode="replace"
+                               data-ajax-update="#newOverviewContainer2">
+                                @searchResult.CityName (@searchResult.Country.CountryName)
+                            </a>
+                        </h3>
+                    }
+                }
+                else
+                {
+                    <h4>No results</h4>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

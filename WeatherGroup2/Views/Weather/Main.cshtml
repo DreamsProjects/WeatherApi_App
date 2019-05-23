@@ -1,0 +1,91 @@
+﻿@model WeatherGroup2.ViewModels.OverviewViewModel
+
+
+
+<div class="row">
+
+    <div class="col-9 mx-auto">
+
+        <div id="newOverviewContainer2">
+
+            @{await Html.RenderPartialAsync("ShowOverviewPartial", Model); }
+
+        </div>
+
+        <div class="mt-3">
+            <div id="DetailedView">
+                <!-- to be rendered by Ajax-->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-3 mx-auto" id="FavoriteSection">
+        <!-- to be rendered by Ajax-->
+
+    </div>
+
+</div>
+
+
+@section Scripts
+    {
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+
+
+    <script>
+
+        // When Main View has been loaded, Show Favorites Partial View
+        $(document).ready(function() {
+
+            $.get(
+                '@Url.Action("ShowFavorites", "Weather")',
+                // {id : 1},
+                function(partialViewResult) {
+                    $("#FavoriteSection").html(partialViewResult);
+                });
+        });
+
+
+        // Used in the Search field
+        function returnSearchResults(cityName) {
+            $.ajax({
+                    url: "/Weather/ShowSearchResults",
+                    type: "GET",
+                    data: { searchQuery: cityName }
+                })
+                .done(function(partialViewResult) {
+                    $("#newOverviewContainer2").html(partialViewResult);
+                });
+        }
+
+        // Search result field update and display of results
+        $('#searchBtn').click(function() {
+            var query = $('#searchInput').val();
+
+            // Hide details panel if present
+            $('#DetailedView').hide();
+
+            returnSearchResults(query);
+
+            $('#searchInput').val("");
+            $('#searchInput').attr("placeholder", "search for a city...");
+        });
+
+        function showDetails() {
+            document.getElementById('ShowDetails').style = "display: none";
+            document.getElementById('HideDetails').style = "display: inline";
+            document.getElementById('DetailedView').style = "display: inline";
+        }
+
+        function hideDetails() {
+            document.getElementById('ShowDetails').style = "display: inline";
+            document.getElementById('HideDetails').style = "display: none";
+            document.getElementById('DetailedView').style = "display: none";
+        }
+    </script>
+
+}
